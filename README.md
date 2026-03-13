@@ -51,6 +51,7 @@ Optional:
 - `REPO_ALLOWLIST` as comma-separated `org/repo`
 - `POLL_PARTICIPATING` default `true`
 - `POLL_ALL` default `false`
+- `IGNORE_GITHUB_ACTIONS_COMMENTS` default `true`
 
 ## Local build
 
@@ -90,6 +91,7 @@ Useful Terraform inputs:
 - `poll_interval_minutes` default `1`
 - `poll_participating` default `true`
 - `poll_all` default `false`
+- `ignore_github_actions_comments` default `true`
 
 Outputs:
 
@@ -122,5 +124,6 @@ Create a workflow with:
 - similar messages inside the debounce window are suppressed with a second rolling key
 - only notifications updated within the live-feed window are eligible to send
 - empty fallback `activity on your PR` notifications are suppressed unless GitHub gives enough comment context to enrich them
+- `github-actions[bot]` PR and inline comment notifications are ignored by default
 - no mark-as-read behavior yet; this tool observes your inbox rather than mutating it
 - no Slack threading because delivery uses a workflow webhook rather than a Slack app token

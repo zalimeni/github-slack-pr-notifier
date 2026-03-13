@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -188,6 +189,10 @@ func EnrichThread(ctx context.Context, client *Client, cfg config.Config, thread
 			notification.CommentExcerpt = filter.Excerpt(comment.Body)
 			notification.FilePath = comment.Path
 			notification.MentionDetected = thread.Reason == "mention" || thread.Reason == "team_mention"
+			if filter.IgnoreCommentActor(cfg, notification.Actor) {
+				log.Printf("notification action=skip_ignored_actor repo=%s pr=%d event_type=%s actor=%q action_url=%q", notification.Repo, notification.PRNumber, notification.EventType, notification.Actor, notification.ActionURL)
+				return model.Notification{}, false, nil
+			}
 			if !finalizeNotification(&notification) {
 				return model.Notification{}, false, nil
 			}
@@ -205,6 +210,10 @@ func EnrichThread(ctx context.Context, client *Client, cfg config.Config, thread
 			notification.ActionURL = comment.HTMLURL
 			notification.CommentExcerpt = filter.Excerpt(comment.Body)
 			notification.MentionDetected = thread.Reason == "mention" || thread.Reason == "team_mention"
+			if filter.IgnoreCommentActor(cfg, notification.Actor) {
+				log.Printf("notification action=skip_ignored_actor repo=%s pr=%d event_type=%s actor=%q action_url=%q", notification.Repo, notification.PRNumber, notification.EventType, notification.Actor, notification.ActionURL)
+				return model.Notification{}, false, nil
+			}
 			if !finalizeNotification(&notification) {
 				return model.Notification{}, false, nil
 			}
@@ -358,8 +367,36 @@ func shouldSuppressNotification(notification model.Notification) bool {
 }
 
 func dedupKey(notification model.Notification) string {
-	parts := []string{notification.Repo, strconv.Itoa(notification.PRNumber), notification.EventType, notification.EventLabel, notification.Actor, notification.ActionURL, notification.UpdatedAt}
-	return hashParts(parts...)
+	switch notification.EventType {
+	case "pull_request_review_comment", "issue_comment":
+		return hashParts(
+			notification.Repo,
+			strconv.Itoa(notification.PRNumber),
+			notification.EventType,
+			notification.EventLabel,
+			notification.Actor,
+			notification.ActionURL,
+		)
+	case "pull_request":
+		return hashParts(
+			notification.Repo,
+			strconv.Itoa(notification.PRNumber),
+			notification.EventType,
+			notification.EventLabel,
+			notification.Reason,
+		)
+	default:
+		return hashParts(
+			notification.Repo,
+			strconv.Itoa(notification.PRNumber),
+			notification.EventType,
+			notification.EventLabel,
+			notification.Actor,
+			notification.ActionURL,
+			notification.ThreadURL,
+			notification.Reason,
+		)
+	}
 }
 
 func debounceKey(notification model.Notification) string {

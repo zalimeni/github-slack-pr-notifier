@@ -12,15 +12,16 @@ resource "aws_lambda_function" "this" {
 
   environment {
     variables = {
-      GITHUB_USERNAME    = var.github_username
-      REPO_ALLOWLIST     = var.repo_allowlist
-      STATE_TABLE_NAME   = var.state_table_name
-      SECRETS_MANAGER_ID = aws_secretsmanager_secret.runtime.name
-      POLL_PARTICIPATING = tostring(var.poll_participating)
-      POLL_ALL           = tostring(var.poll_all)
-      DEDUP_TTL          = var.dedup_ttl
-      DEBOUNCE_WINDOW    = var.debounce_window
-      LIVE_FEED_WINDOW   = var.live_feed_window
+      GITHUB_USERNAME                = var.github_username
+      REPO_ALLOWLIST                 = var.repo_allowlist
+      STATE_TABLE_NAME               = var.state_table_name
+      SECRETS_MANAGER_ID             = aws_secretsmanager_secret.runtime.name
+      POLL_PARTICIPATING             = tostring(var.poll_participating)
+      POLL_ALL                       = tostring(var.poll_all)
+      IGNORE_GITHUB_ACTIONS_COMMENTS = tostring(var.ignore_github_actions_comments)
+      DEDUP_TTL                      = var.dedup_ttl
+      DEBOUNCE_WINDOW                = var.debounce_window
+      LIVE_FEED_WINDOW               = var.live_feed_window
     }
   }
 

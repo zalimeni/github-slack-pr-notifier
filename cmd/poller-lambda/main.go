@@ -90,6 +90,7 @@ func handle(ctx context.Context, cfg config.Config, githubClient *gh.Client, sla
 			continue
 		}
 		if !isLive(notification, cfg, now) {
+			logNotification("skip_stale", notification)
 			resp.SkippedStale++
 			continue
 		}
@@ -100,9 +101,11 @@ func handle(ctx context.Context, cfg config.Config, githubClient *gh.Client, sla
 		}
 		switch decision {
 		case decisionDuplicate:
+			logNotification("skip_duplicate", notification)
 			resp.SkippedDuplicate++
 			continue
 		case decisionDebounced:
+			logNotification("skip_debounced", notification)
 			resp.SkippedDebounced++
 			continue
 		}
@@ -110,6 +113,7 @@ func handle(ctx context.Context, cfg config.Config, githubClient *gh.Client, sla
 		if err := slackClient.Send(ctx, notification); err != nil {
 			return response{}, err
 		}
+		logNotification("sent", notification)
 		if err := recordSend(ctx, cfg, stateStore, notification); err != nil {
 			return response{}, err
 		}
@@ -185,4 +189,21 @@ func isLive(notification model.Notification, cfg config.Config, now time.Time) b
 		return true
 	}
 	return !notification.UpdatedAtTime.Before(now.Add(-cfg.LiveFeedWindow))
+}
+
+func logNotification(action string, notification model.Notification) {
+	log.Printf(
+		"notification action=%s repo=%s pr=%d event_type=%s event_label=%q reason=%s actor=%q updated_at=%q action_url=%q dedup_key=%s debounce_key=%s",
+		action,
+		notification.Repo,
+		notification.PRNumber,
+		notification.EventType,
+		notification.EventLabel,
+		notification.Reason,
+		notification.Actor,
+		notification.UpdatedAt,
+		notification.ActionURL,
+		notification.DedupKey,
+		notification.DebounceKey,
+	)
 }

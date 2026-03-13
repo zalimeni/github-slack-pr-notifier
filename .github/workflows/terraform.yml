@@ -18,6 +18,7 @@ jobs:
       TF_VAR_poll_interval_minutes: ${{ vars.POLL_INTERVAL_MINUTES || '1' }}
       TF_VAR_poll_participating: ${{ vars.POLL_PARTICIPATING || 'true' }}
       TF_VAR_poll_all: ${{ vars.POLL_ALL || 'false' }}
+      TF_VAR_ignore_github_actions_comments: ${{ vars.IGNORE_GITHUB_ACTIONS_COMMENTS || 'true' }}
       TF_VAR_state_table_name: ${{ vars.STATE_TABLE_NAME || 'github-slack-pr-notifier-state' }}
       TF_VAR_secrets_manager_id: ${{ vars.SECRETS_MANAGER_ID || 'github-slack-pr-notifier/runtime' }}
       TF_VAR_dedup_ttl: ${{ vars.DEDUP_TTL || '168h' }}

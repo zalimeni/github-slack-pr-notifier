@@ -24,3 +24,11 @@ func Excerpt(body string) string {
 
 	return body[:max-1] + "..."
 }
+
+func IgnoreCommentActor(cfg config.Config, actor string) bool {
+	if !cfg.IgnoreGitHubActionsComments {
+		return false
+	}
+
+	return strings.EqualFold(strings.TrimSpace(actor), "github-actions[bot]")
+}

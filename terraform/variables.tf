@@ -57,6 +57,12 @@ variable "poll_all" {
   default     = false
 }
 
+variable "ignore_github_actions_comments" {
+  description = "Ignore comment notifications authored by github-actions[bot]"
+  type        = bool
+  default     = true
+}
+
 variable "dedup_ttl" {
   description = "How long processed notification fingerprints stay in storage"
   type        = string

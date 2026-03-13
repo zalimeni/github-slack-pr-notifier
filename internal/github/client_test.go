@@ -4,6 +4,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/zalimeni/github-slack-pr-notifier/internal/config"
+	"github.com/zalimeni/github-slack-pr-notifier/internal/filter"
 	"github.com/zalimeni/github-slack-pr-notifier/internal/model"
 )
 
@@ -50,7 +52,7 @@ func TestDebounceKeyDistinguishesDifferentCommentURLs(t *testing.T) {
 	}
 }
 
-func TestDedupKeyChangesWithUpdatedAt(t *testing.T) {
+func TestDedupKeyIgnoresUpdatedAtForReviewRequests(t *testing.T) {
 	first := model.Notification{
 		EventType:  "pull_request",
 		EventLabel: "review requested",
@@ -64,8 +66,27 @@ func TestDedupKeyChangesWithUpdatedAt(t *testing.T) {
 	second := first
 	second.UpdatedAt = time.Unix(200, 0).UTC().Format(time.RFC3339)
 
-	if got, want := dedupKey(first), dedupKey(second); got == want {
-		t.Fatalf("expected different dedupe keys for different update times, both were %q", got)
+	if got, want := dedupKey(first), dedupKey(second); got != want {
+		t.Fatalf("expected same dedupe key for identical review request, got %q and %q", got, want)
+	}
+}
+
+func TestDedupKeyIgnoresUpdatedAtForComments(t *testing.T) {
+	first := model.Notification{
+		EventType:  "issue_comment",
+		EventLabel: "PR comment",
+		Repo:       "acme/repo",
+		PRNumber:   42,
+		Actor:      "alice",
+		ActionURL:  "https://github.com/acme/repo/pull/42#issuecomment-1",
+		UpdatedAt:  time.Unix(100, 0).UTC().Format(time.RFC3339),
+	}
+
+	second := first
+	second.UpdatedAt = time.Unix(200, 0).UTC().Format(time.RFC3339)
+
+	if got, want := dedupKey(first), dedupKey(second); got != want {
+		t.Fatalf("expected same dedupe key for identical comment, got %q and %q", got, want)
 	}
 }
 
@@ -103,5 +124,14 @@ func TestFinalizeNotificationKeepsEnrichedAuthorActivity(t *testing.T) {
 	}
 	if notification.DedupKey == "" {
 		t.Fatal("expected dedupe key to be populated")
+	}
+}
+
+func TestShouldIgnoreCommentNotificationActor(t *testing.T) {
+	if !filter.IgnoreCommentActor(config.Config{IgnoreGitHubActionsComments: true}, "github-actions[bot]") {
+		t.Fatal("expected github-actions bot comments to be ignored")
+	}
+	if filter.IgnoreCommentActor(config.Config{IgnoreGitHubActionsComments: false}, "github-actions[bot]") {
+		t.Fatal("expected github-actions bot comments to be allowed when disabled")
 	}
 }

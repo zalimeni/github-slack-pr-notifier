@@ -9,28 +9,30 @@ import (
 )
 
 type Config struct {
-	GitHubUsername    string
-	StateTableName    string
-	SecretsManagerID  string
-	RepoAllowlist     map[string]struct{}
-	PollParticipating bool
-	PollAll           bool
-	DedupTTL          time.Duration
-	DebounceWindow    time.Duration
-	LiveFeedWindow    time.Duration
+	GitHubUsername              string
+	StateTableName              string
+	SecretsManagerID            string
+	RepoAllowlist               map[string]struct{}
+	PollParticipating           bool
+	PollAll                     bool
+	IgnoreGitHubActionsComments bool
+	DedupTTL                    time.Duration
+	DebounceWindow              time.Duration
+	LiveFeedWindow              time.Duration
 }
 
 func Load() (Config, error) {
 	cfg := Config{
-		GitHubUsername:    strings.ToLower(strings.TrimSpace(os.Getenv("GITHUB_USERNAME"))),
-		StateTableName:    strings.TrimSpace(os.Getenv("STATE_TABLE_NAME")),
-		SecretsManagerID:  strings.TrimSpace(os.Getenv("SECRETS_MANAGER_ID")),
-		RepoAllowlist:     parseAllowlist(os.Getenv("REPO_ALLOWLIST")),
-		PollParticipating: envBool("POLL_PARTICIPATING", true),
-		PollAll:           envBool("POLL_ALL", false),
-		DedupTTL:          envDuration("DEDUP_TTL", 7*24*time.Hour),
-		DebounceWindow:    envDuration("DEBOUNCE_WINDOW", 2*time.Minute),
-		LiveFeedWindow:    envDuration("LIVE_FEED_WINDOW", 10*time.Minute),
+		GitHubUsername:              strings.ToLower(strings.TrimSpace(os.Getenv("GITHUB_USERNAME"))),
+		StateTableName:              strings.TrimSpace(os.Getenv("STATE_TABLE_NAME")),
+		SecretsManagerID:            strings.TrimSpace(os.Getenv("SECRETS_MANAGER_ID")),
+		RepoAllowlist:               parseAllowlist(os.Getenv("REPO_ALLOWLIST")),
+		PollParticipating:           envBool("POLL_PARTICIPATING", true),
+		PollAll:                     envBool("POLL_ALL", false),
+		IgnoreGitHubActionsComments: envBool("IGNORE_GITHUB_ACTIONS_COMMENTS", true),
+		DedupTTL:                    envDuration("DEDUP_TTL", 7*24*time.Hour),
+		DebounceWindow:              envDuration("DEBOUNCE_WINDOW", 2*time.Minute),
+		LiveFeedWindow:              envDuration("LIVE_FEED_WINDOW", 10*time.Minute),
 	}
 
 	if cfg.GitHubUsername == "" {
