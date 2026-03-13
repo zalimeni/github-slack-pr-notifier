@@ -22,6 +22,7 @@ export REASON="${REASON:-comment}"
 export UPDATED_AT="${UPDATED_AT:-2026-03-12T20:10:12Z}"
 export THREAD_URL="${THREAD_URL:-https://api.github.com/repos/acme/service-api/pulls/142}"
 export THREAD_TYPE="${THREAD_TYPE:-PullRequest}"
+export REQUESTED_TEAM="${REQUESTED_TEAM:-team-infragraph}"
 
 python3 - <<'PY'
 import json, os, urllib.request
@@ -46,6 +47,7 @@ payload = {
     'updated_at': os.environ['UPDATED_AT'],
     'thread_url': os.environ['THREAD_URL'],
     'thread_type': os.environ['THREAD_TYPE'],
+    'requested_team': os.environ['REQUESTED_TEAM'],
 }
 req = urllib.request.Request(url, data=json.dumps(payload).encode('utf-8'), headers={'Content-Type': 'application/json'})
 with urllib.request.urlopen(req, timeout=20) as resp:

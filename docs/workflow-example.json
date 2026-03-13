@@ -138,6 +138,13 @@
         "title": "thread_type",
         "is_hidden": false
       },
+      "Ft0ALQSK6D7B__6a6a5cce0a8e4d1ea7dcf3e7db6c58f1": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__6a6a5cce0a8e4d1ea7dcf3e7db6c58f1",
+        "description": "6a6a5cce0a8e4d1ea7dcf3e7db6c58f1",
+        "title": "requested_team",
+        "is_hidden": false
+      },
       "Ft0ALQSK6D7B__97fd815a3803a0588876bdd862014fed": {
         "type": "string",
         "name": "Ft0ALQSK6D7B__97fd815a3803a0588876bdd862014fed",
@@ -242,6 +249,15 @@
                               {
                                 "type": "workflowtoken",
                                 "id": "{{inputs.Ft0ALQSK6D7B__8e62561c3ac6d3fb0016e9a34a2caa5d}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\nRequested team: "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__6a6a5cce0a8e4d1ea7dcf3e7db6c58f1}}",
                                 "data_type": "string"
                               },
                               {
@@ -724,6 +740,11 @@
           "value": "{{data.180af0555bdd48b2b2fc4387516e4fff}}",
           "locked": false,
           "hidden": false
+        },
+        "Ft0ALQSK6D7B__6a6a5cce0a8e4d1ea7dcf3e7db6c58f1": {
+          "value": "{{data.6a6a5cce0a8e4d1ea7dcf3e7db6c58f1}}",
+          "locked": false,
+          "hidden": false
         }
       },
       "webhook": {
@@ -809,6 +830,13 @@
             "type": "string",
             "title": "thread_type",
             "name": "a107f3a9374d3421c00af9157c0f5210",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "requested_team": {
+            "type": "string",
+            "title": "requested_team",
+            "name": "6a6a5cce0a8e4d1ea7dcf3e7db6c58f1",
             "is_hidden": false,
             "is_required": false
           },

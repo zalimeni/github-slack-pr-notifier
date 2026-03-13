@@ -44,6 +44,7 @@ Create a workflow with trigger `From a webhook` and make sure it accepts these t
 - `updated_at`
 - `thread_url`
 - `thread_type`
+- `requested_team`
 
 The exported Slack example only visibly uses some of these in message bodies, but the notifier payload includes all of them.
 
@@ -57,6 +58,7 @@ Message shape:
 ```text
 Review requested on repo PR #number: title
 Requested by actor
+Requested team: requested_team
 Author: author
 Open pull request
 ```
