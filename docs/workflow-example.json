@@ -1,0 +1,868 @@
+{
+  "workflow": {
+    "id": "Wf0AKWG184P9",
+    "title": "GitHub Webhook - Notifications",
+    "description": "Adapted from exported workflow for GitHub PR notifications",
+    "icon": "https://raw.githubusercontent.com/zalimeni/github-slack-pr-notifier/main/docs/assets/workflow-icon.png",
+    "input_parameters": {
+      "Ft0ALQSK6D7B__bf51b23e4eb3b517a5b5f6af902eba9b": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__bf51b23e4eb3b517a5b5f6af902eba9b",
+        "description": "bf51b23e4eb3b517a5b5f6af902eba9b",
+        "title": "event_label",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__4a229d7a17a223641a50c9701ff4c7e6": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__4a229d7a17a223641a50c9701ff4c7e6",
+        "description": "4a229d7a17a223641a50c9701ff4c7e6",
+        "title": "pr_url",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__e349229129215b3d78ae86d009ef7117": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__e349229129215b3d78ae86d009ef7117",
+        "description": "e349229129215b3d78ae86d009ef7117",
+        "title": "pr_number",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__89bb6900736548ebd6455d0ab07aa5fe": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__89bb6900736548ebd6455d0ab07aa5fe",
+        "description": "89bb6900736548ebd6455d0ab07aa5fe",
+        "title": "repo",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__f49ca4c4c47c12e00b8bf324cf1491ff": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__f49ca4c4c47c12e00b8bf324cf1491ff",
+        "description": "f49ca4c4c47c12e00b8bf324cf1491ff",
+        "title": "pr_title",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__8e62561c3ac6d3fb0016e9a34a2caa5d": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__8e62561c3ac6d3fb0016e9a34a2caa5d",
+        "description": "8e62561c3ac6d3fb0016e9a34a2caa5d",
+        "title": "actor",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__02bd92faa38aaa6cc0ea75e59937a1ef": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__02bd92faa38aaa6cc0ea75e59937a1ef",
+        "description": "02bd92faa38aaa6cc0ea75e59937a1ef",
+        "title": "author",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__628e4955ca689162a53dcfc22eba956f": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__628e4955ca689162a53dcfc22eba956f",
+        "description": "628e4955ca689162a53dcfc22eba956f",
+        "title": "comment_excerpt",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__9e3506355708044b967a8bcaff377631": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__9e3506355708044b967a8bcaff377631",
+        "description": "9e3506355708044b967a8bcaff377631",
+        "title": "action_url",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__1cd0361405ee31ff6a59ae778f9744fe": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__1cd0361405ee31ff6a59ae778f9744fe",
+        "description": "1cd0361405ee31ff6a59ae778f9744fe",
+        "title": "event_type",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__cd3965b530c44a76b74de9fcba726527": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__cd3965b530c44a76b74de9fcba726527",
+        "description": "cd3965b530c44a76b74de9fcba726527",
+        "title": "repo_url",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__ccacfb9cdede42eb9bb028be06d753ad": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__ccacfb9cdede42eb9bb028be06d753ad",
+        "description": "ccacfb9cdede42eb9bb028be06d753ad",
+        "title": "actor_url",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__507f03e9ea1040f8af4f86c2990d1e83": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__507f03e9ea1040f8af4f86c2990d1e83",
+        "description": "507f03e9ea1040f8af4f86c2990d1e83",
+        "title": "review_state",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__a01744bb6e2d4b19a71e27ef90f061a6": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__a01744bb6e2d4b19a71e27ef90f061a6",
+        "description": "a01744bb6e2d4b19a71e27ef90f061a6",
+        "title": "file_path",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__30d54fe437fa4388bcf3f8eb16a97d10": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__30d54fe437fa4388bcf3f8eb16a97d10",
+        "description": "30d54fe437fa4388bcf3f8eb16a97d10",
+        "title": "mention_detected",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__5c3ca5a0915348568594e9058f09a275": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__5c3ca5a0915348568594e9058f09a275",
+        "description": "5c3ca5a0915348568594e9058f09a275",
+        "title": "reason",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__629b2f114fb2439aa8869a6fcde78f54": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__629b2f114fb2439aa8869a6fcde78f54",
+        "description": "629b2f114fb2439aa8869a6fcde78f54",
+        "title": "updated_at",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__c56b72f491874bdc8360f723e7102387": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__c56b72f491874bdc8360f723e7102387",
+        "description": "c56b72f491874bdc8360f723e7102387",
+        "title": "thread_url",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__180af0555bdd48b2b2fc4387516e4fff": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__180af0555bdd48b2b2fc4387516e4fff",
+        "description": "180af0555bdd48b2b2fc4387516e4fff",
+        "title": "thread_type",
+        "is_hidden": false
+      },
+      "Ft0ALQSK6D7B__97fd815a3803a0588876bdd862014fed": {
+        "type": "string",
+        "name": "Ft0ALQSK6D7B__97fd815a3803a0588876bdd862014fed",
+        "description": "97fd815a3803a0588876bdd862014fed",
+        "title": "file_path",
+        "is_hidden": false
+      }
+    },
+    "steps": [
+      {
+        "id": "c8ed35de-82f2-4129-8350-c271e0328d38",
+        "function_id": "Fn0201",
+        "inputs": {},
+        "type": "switch",
+        "steps": [
+          {
+            "id": "f021ff48-d5a4-4a12-9136-249280191a26",
+            "function_id": "Fn0202",
+            "inputs": {},
+            "type": "case",
+            "expression": {
+              "version": 1,
+              "root": {
+                "statement": {
+                  "target": "{{inputs.Ft0ALQSK6D7B__bf51b23e4eb3b517a5b5f6af902eba9b}}",
+                  "operator": "EQUALS",
+                  "value": "review requested"
+                }
+              }
+            },
+            "display_config": {
+              "color": "gray"
+            },
+            "name": "Review requested",
+            "steps": [
+              {
+                "id": "9156e05f-e288-4446-888d-701c9fbb358a",
+                "function_id": "Fn0102",
+                "inputs": {
+                  "channel_id": {
+                    "hidden": false,
+                    "locked": false,
+                    "value": "C09LDJ536QZ"
+                  },
+                  "message": {
+                    "hidden": false,
+                    "locked": false,
+                    "value": [
+                      {
+                        "type": "rich_text",
+                        "elements": [
+                          {
+                            "type": "rich_text_section",
+                            "elements": [
+                              {
+                                "type": "text",
+                                "text": "Review requested",
+                                "style": {
+                                  "bold": true
+                                }
+                              },
+                              {
+                                "type": "text",
+                                "text": " on "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__89bb6900736548ebd6455d0ab07aa5fe}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": " "
+                              },
+                              {
+                                "type": "link",
+                                "url": "{{inputs.Ft0ALQSK6D7B__4a229d7a17a223641a50c9701ff4c7e6}}",
+                                "text": "PR"
+                              },
+                              {
+                                "type": "text",
+                                "text": " #"
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__e349229129215b3d78ae86d009ef7117}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": ": "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__f49ca4c4c47c12e00b8bf324cf1491ff}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\nRequested by "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__8e62561c3ac6d3fb0016e9a34a2caa5d}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\nAuthor: "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__02bd92faa38aaa6cc0ea75e59937a1ef}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\n"
+                              },
+                              {
+                                "type": "link",
+                                "url": "{{inputs.Ft0ALQSK6D7B__9e3506355708044b967a8bcaff377631}}",
+                                "text": "Open pull request"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "8d1eb53b-50a9-4b96-9b58-927db8eb1131",
+            "function_id": "Fn0202",
+            "inputs": {},
+            "type": "case",
+            "expression": {
+              "version": 1,
+              "root": {
+                "statement": {
+                  "target": "{{inputs.Ft0ALQSK6D7B__1cd0361405ee31ff6a59ae778f9744fe}}",
+                  "operator": "EQUALS",
+                  "value": "pull_request_review_comment"
+                }
+              }
+            },
+            "display_config": {
+              "color": "gray"
+            },
+            "name": "Inline comment",
+            "steps": [
+              {
+                "id": "9fd99374-a640-450a-91c7-63f9f270058d",
+                "function_id": "Fn0102",
+                "inputs": {
+                  "channel_id": {
+                    "hidden": false,
+                    "locked": false,
+                    "value": "C09LDJ536QZ"
+                  },
+                  "message": {
+                    "hidden": false,
+                    "locked": false,
+                    "value": [
+                      {
+                        "type": "rich_text",
+                        "elements": [
+                          {
+                            "type": "rich_text_section",
+                            "elements": [
+                              {
+                                "type": "text",
+                                "text": "Inline comment",
+                                "style": {
+                                  "bold": true
+                                }
+                              },
+                              {
+                                "type": "text",
+                                "text": " on "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__89bb6900736548ebd6455d0ab07aa5fe}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": " "
+                              },
+                              {
+                                "type": "link",
+                                "url": "{{inputs.Ft0ALQSK6D7B__4a229d7a17a223641a50c9701ff4c7e6}}",
+                                "text": "PR"
+                              },
+                              {
+                                "type": "text",
+                                "text": " #"
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__e349229129215b3d78ae86d009ef7117}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": ": "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__f49ca4c4c47c12e00b8bf324cf1491ff}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\nActor: "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__8e62561c3ac6d3fb0016e9a34a2caa5d}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\nFile: "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__97fd815a3803a0588876bdd862014fed}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\nComment: "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__628e4955ca689162a53dcfc22eba956f}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\n"
+                              },
+                              {
+                                "type": "link",
+                                "url": "{{inputs.Ft0ALQSK6D7B__9e3506355708044b967a8bcaff377631}}",
+                                "text": "Open comment"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "ab5ea6c6-165d-40e3-b335-c67efea68f8c",
+            "function_id": "Fn0202",
+            "inputs": {},
+            "type": "case",
+            "expression": {
+              "version": 1,
+              "root": {
+                "statement": {
+                  "target": "{{inputs.Ft0ALQSK6D7B__1cd0361405ee31ff6a59ae778f9744fe}}",
+                  "operator": "EQUALS",
+                  "value": "issue_comment"
+                }
+              }
+            },
+            "display_config": {
+              "color": "gray"
+            },
+            "name": "PR comment or mention",
+            "steps": [
+              {
+                "id": "8878f8e1-30c6-492f-9f95-86e6c52e6734",
+                "function_id": "Fn0102",
+                "inputs": {
+                  "channel_id": {
+                    "hidden": false,
+                    "locked": false,
+                    "value": "C09LDJ536QZ"
+                  },
+                  "message": {
+                    "hidden": false,
+                    "locked": false,
+                    "value": [
+                      {
+                        "type": "rich_text",
+                        "elements": [
+                          {
+                            "type": "rich_text_section",
+                            "elements": [
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__bf51b23e4eb3b517a5b5f6af902eba9b}}",
+                                "data_type": "string",
+                                "style": {
+                                  "bold": true
+                                }
+                              },
+                              {
+                                "type": "text",
+                                "text": " on "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__89bb6900736548ebd6455d0ab07aa5fe}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": " "
+                              },
+                              {
+                                "type": "link",
+                                "url": "{{inputs.Ft0ALQSK6D7B__4a229d7a17a223641a50c9701ff4c7e6}}",
+                                "text": "PR"
+                              },
+                              {
+                                "type": "text",
+                                "text": " #"
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__e349229129215b3d78ae86d009ef7117}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": ": "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__f49ca4c4c47c12e00b8bf324cf1491ff}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\nActor: "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__8e62561c3ac6d3fb0016e9a34a2caa5d}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\nComment: "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__628e4955ca689162a53dcfc22eba956f}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\n"
+                              },
+                              {
+                                "type": "link",
+                                "url": "{{inputs.Ft0ALQSK6D7B__9e3506355708044b967a8bcaff377631}}",
+                                "text": "Open activity"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "1deda45f-18e8-4ee9-9228-46a45b7240fa",
+            "function_id": "Fn0202",
+            "inputs": {},
+            "type": "case",
+            "display_config": {
+              "color": "gray"
+            },
+            "name": "fallback",
+            "steps": [
+              {
+                "id": "db6e03b0-dbfb-4405-bf87-796b3517aed4",
+                "function_id": "Fn0102",
+                "inputs": {
+                  "channel_id": {
+                    "hidden": false,
+                    "locked": false,
+                    "value": "C09LDJ536QZ"
+                  },
+                  "message": {
+                    "hidden": false,
+                    "locked": false,
+                    "value": [
+                      {
+                        "type": "rich_text",
+                        "elements": [
+                          {
+                            "type": "rich_text_section",
+                            "elements": [
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__bf51b23e4eb3b517a5b5f6af902eba9b}}",
+                                "data_type": "string",
+                                "style": {
+                                  "bold": true
+                                }
+                              },
+                              {
+                                "type": "text",
+                                "text": " on "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__89bb6900736548ebd6455d0ab07aa5fe}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": " "
+                              },
+                              {
+                                "type": "link",
+                                "url": "{{inputs.Ft0ALQSK6D7B__4a229d7a17a223641a50c9701ff4c7e6}}",
+                                "text": "PR"
+                              },
+                              {
+                                "type": "text",
+                                "text": " #"
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__e349229129215b3d78ae86d009ef7117}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": ": "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__f49ca4c4c47c12e00b8bf324cf1491ff}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\nAuthor: "
+                              },
+                              {
+                                "type": "workflowtoken",
+                                "id": "{{inputs.Ft0ALQSK6D7B__02bd92faa38aaa6cc0ea75e59937a1ef}}",
+                                "data_type": "string"
+                              },
+                              {
+                                "type": "text",
+                                "text": "\n"
+                              },
+                              {
+                                "type": "link",
+                                "url": "{{inputs.Ft0ALQSK6D7B__9e3506355708044b967a8bcaff377631}}",
+                                "text": "Open activity"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "triggers": [
+    {
+      "name": "GitHub Webhook - Notifications",
+      "type": "webhook",
+      "inputs": {
+        "Ft0ALQSK6D7B__bf51b23e4eb3b517a5b5f6af902eba9b": {
+          "value": "{{data.bf51b23e4eb3b517a5b5f6af902eba9b}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__4a229d7a17a223641a50c9701ff4c7e6": {
+          "value": "{{data.4a229d7a17a223641a50c9701ff4c7e6}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__e349229129215b3d78ae86d009ef7117": {
+          "value": "{{data.e349229129215b3d78ae86d009ef7117}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__89bb6900736548ebd6455d0ab07aa5fe": {
+          "value": "{{data.89bb6900736548ebd6455d0ab07aa5fe}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__f49ca4c4c47c12e00b8bf324cf1491ff": {
+          "value": "{{data.f49ca4c4c47c12e00b8bf324cf1491ff}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__8e62561c3ac6d3fb0016e9a34a2caa5d": {
+          "value": "{{data.8e62561c3ac6d3fb0016e9a34a2caa5d}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__02bd92faa38aaa6cc0ea75e59937a1ef": {
+          "value": "{{data.02bd92faa38aaa6cc0ea75e59937a1ef}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__628e4955ca689162a53dcfc22eba956f": {
+          "value": "{{data.628e4955ca689162a53dcfc22eba956f}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__9e3506355708044b967a8bcaff377631": {
+          "value": "{{data.9e3506355708044b967a8bcaff377631}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__1cd0361405ee31ff6a59ae778f9744fe": {
+          "value": "{{data.1cd0361405ee31ff6a59ae778f9744fe}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__cd3965b530c44a76b74de9fcba726527": {
+          "value": "{{data.cd3965b530c44a76b74de9fcba726527}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__ccacfb9cdede42eb9bb028be06d753ad": {
+          "value": "{{data.ccacfb9cdede42eb9bb028be06d753ad}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__507f03e9ea1040f8af4f86c2990d1e83": {
+          "value": "{{data.507f03e9ea1040f8af4f86c2990d1e83}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__a01744bb6e2d4b19a71e27ef90f061a6": {
+          "value": "{{data.a01744bb6e2d4b19a71e27ef90f061a6}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__30d54fe437fa4388bcf3f8eb16a97d10": {
+          "value": "{{data.30d54fe437fa4388bcf3f8eb16a97d10}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__5c3ca5a0915348568594e9058f09a275": {
+          "value": "{{data.5c3ca5a0915348568594e9058f09a275}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__629b2f114fb2439aa8869a6fcde78f54": {
+          "value": "{{data.629b2f114fb2439aa8869a6fcde78f54}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__c56b72f491874bdc8360f723e7102387": {
+          "value": "{{data.c56b72f491874bdc8360f723e7102387}}",
+          "locked": false,
+          "hidden": false
+        },
+        "Ft0ALQSK6D7B__180af0555bdd48b2b2fc4387516e4fff": {
+          "value": "{{data.180af0555bdd48b2b2fc4387516e4fff}}",
+          "locked": false,
+          "hidden": false
+        }
+      },
+      "webhook": {
+        "schema": {
+          "author": {
+            "type": "string",
+            "title": "author",
+            "name": "02bd92faa38aaa6cc0ea75e59937a1ef",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "review_state": {
+            "type": "string",
+            "title": "review_state",
+            "name": "04872831d1c773e989e7330f1b5e2b7a",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "thread_url": {
+            "type": "string",
+            "title": "thread_url",
+            "name": "091e1d962d4634093f3cac661ee098ef",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "event_type": {
+            "type": "string",
+            "title": "event_type",
+            "name": "1cd0361405ee31ff6a59ae778f9744fe",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "reason": {
+            "type": "string",
+            "title": "reason",
+            "name": "40bea8d637cdf2c1b07fcf0630482b73",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "pr_url": {
+            "type": "string",
+            "title": "pr_url",
+            "name": "4a229d7a17a223641a50c9701ff4c7e6",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "comment_excerpt": {
+            "type": "string",
+            "title": "comment_excerpt",
+            "name": "628e4955ca689162a53dcfc22eba956f",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "repo": {
+            "type": "string",
+            "title": "repo",
+            "name": "89bb6900736548ebd6455d0ab07aa5fe",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "actor": {
+            "type": "string",
+            "title": "actor",
+            "name": "8e62561c3ac6d3fb0016e9a34a2caa5d",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "file_path": {
+            "type": "string",
+            "title": "file_path",
+            "name": "97fd815a3803a0588876bdd862014fed",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "action_url": {
+            "type": "string",
+            "title": "action_url",
+            "name": "9e3506355708044b967a8bcaff377631",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "thread_type": {
+            "type": "string",
+            "title": "thread_type",
+            "name": "a107f3a9374d3421c00af9157c0f5210",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "updated_at",
+            "name": "afd1a1a8e69e4b32a11a645da8280f8a",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "event_label": {
+            "type": "string",
+            "title": "event_label",
+            "name": "bf51b23e4eb3b517a5b5f6af902eba9b",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "repo_url": {
+            "type": "string",
+            "title": "repo_url",
+            "name": "dcebb0b0c728344dfc7d2a65369fdddb",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "mention_detected": {
+            "type": "string",
+            "title": "mention_detected",
+            "name": "e09eb4a56019e88fa972b4e80154766c",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "pr_number": {
+            "type": "string",
+            "title": "pr_number",
+            "name": "e349229129215b3d78ae86d009ef7117",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "actor_url": {
+            "type": "string",
+            "title": "actor_url",
+            "name": "e3b9eb0b0dc66debe06dfb334e8ba6c7",
+            "is_hidden": false,
+            "is_required": false
+          },
+          "pr_title": {
+            "type": "string",
+            "title": "pr_title",
+            "name": "f49ca4c4c47c12e00b8bf324cf1491ff",
+            "is_hidden": false,
+            "is_required": false
+          }
+        }
+      }
+    }
+  ]
+}

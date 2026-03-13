@@ -1,0 +1,62 @@
+name: terraform-deploy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+      TF_VAR_aws_region: ${{ vars.AWS_REGION || 'us-east-1' }}
+      TF_VAR_github_username: ${{ vars.GITHUB_USERNAME || 'zalimeni' }}
+      TF_VAR_repo_allowlist: ${{ vars.REPO_ALLOWLIST }}
+      TF_VAR_poll_interval_minutes: ${{ vars.POLL_INTERVAL_MINUTES || '1' }}
+      TF_VAR_poll_participating: ${{ vars.POLL_PARTICIPATING || 'true' }}
+      TF_VAR_poll_all: ${{ vars.POLL_ALL || 'false' }}
+      TF_VAR_state_table_name: ${{ vars.STATE_TABLE_NAME || 'github-slack-pr-notifier-state' }}
+      TF_VAR_secrets_manager_id: ${{ vars.SECRETS_MANAGER_ID || 'github-slack-pr-notifier/runtime' }}
+      TF_VAR_dedup_ttl: ${{ vars.DEDUP_TTL || '168h' }}
+      TF_VAR_debounce_window: ${{ vars.DEBOUNCE_WINDOW || '2m' }}
+      TF_VAR_live_feed_window: ${{ vars.LIVE_FEED_WINDOW || '10m' }}
+      TF_VAR_artifact_path: ../dist/function.zip
+      SECRET_ID: ${{ vars.SECRETS_MANAGER_ID || 'github-slack-pr-notifier/runtime' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      - name: Build Lambda artifact
+        run: |
+          mkdir -p dist
+          GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o bootstrap ./cmd/poller-lambda
+          zip -j dist/function.zip bootstrap
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.5
+
+      - name: Terraform init
+        working-directory: terraform
+        run: terraform init
+
+      - name: Terraform apply
+        working-directory: terraform
+        run: terraform apply -auto-approve
+
+      - name: Store runtime secrets in Secrets Manager
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_CLASSIC }}
+          SLACK_WORKFLOW_URL: ${{ secrets.SLACK_WORKFLOW_URL }}
+        run: ./scripts/store-runtime-secrets.sh
