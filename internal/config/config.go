@@ -13,6 +13,7 @@ type Config struct {
 	StateTableName              string
 	SecretsManagerID            string
 	RepoAllowlist               map[string]struct{}
+	TeamReviewRequestAllowlist  map[string]struct{}
 	PollParticipating           bool
 	PollAll                     bool
 	IgnoreGitHubActionsComments bool
@@ -27,6 +28,7 @@ func Load() (Config, error) {
 		StateTableName:              strings.TrimSpace(os.Getenv("STATE_TABLE_NAME")),
 		SecretsManagerID:            strings.TrimSpace(os.Getenv("SECRETS_MANAGER_ID")),
 		RepoAllowlist:               parseAllowlist(os.Getenv("REPO_ALLOWLIST")),
+		TeamReviewRequestAllowlist:  parseAllowlist(os.Getenv("TEAM_REVIEW_REQUEST_ALLOWLIST")),
 		PollParticipating:           envBool("POLL_PARTICIPATING", true),
 		PollAll:                     envBool("POLL_ALL", false),
 		IgnoreGitHubActionsComments: envBool("IGNORE_GITHUB_ACTIONS_COMMENTS", true),

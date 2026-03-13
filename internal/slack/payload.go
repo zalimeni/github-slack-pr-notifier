@@ -26,6 +26,7 @@ type WorkflowPayload struct {
 	UpdatedAt       string `json:"updated_at"`
 	ThreadURL       string `json:"thread_url"`
 	ThreadType      string `json:"thread_type"`
+	RequestedTeam   string `json:"requested_team"`
 }
 
 func NewPayload(notification model.Notification) WorkflowPayload {
@@ -49,5 +50,6 @@ func NewPayload(notification model.Notification) WorkflowPayload {
 		UpdatedAt:       notification.UpdatedAt,
 		ThreadURL:       notification.ThreadURL,
 		ThreadType:      notification.ThreadType,
+		RequestedTeam:   notification.RequestedTeam,
 	}
 }

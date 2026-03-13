@@ -33,6 +33,12 @@ variable "repo_allowlist" {
   default     = ""
 }
 
+variable "team_review_request_allowlist" {
+  description = "Optional comma-separated allowlist of team slugs whose review requests should notify"
+  type        = string
+  default     = ""
+}
+
 variable "state_table_name" {
   description = "DynamoDB table name used to persist Last-Modified state and dedupe records"
   type        = string

@@ -14,6 +14,7 @@ resource "aws_lambda_function" "this" {
     variables = {
       GITHUB_USERNAME                = var.github_username
       REPO_ALLOWLIST                 = var.repo_allowlist
+      TEAM_REVIEW_REQUEST_ALLOWLIST  = var.team_review_request_allowlist
       STATE_TABLE_NAME               = var.state_table_name
       SECRETS_MANAGER_ID             = aws_secretsmanager_secret.runtime.name
       POLL_PARTICIPATING             = tostring(var.poll_participating)

@@ -23,6 +23,7 @@ type Notification struct {
 	UpdatedAtTime   time.Time
 	ThreadURL       string
 	ThreadType      string
+	RequestedTeam   string
 	DedupKey        string
 	DebounceKey     string
 }

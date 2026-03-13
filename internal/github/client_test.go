@@ -135,3 +135,53 @@ func TestShouldIgnoreCommentNotificationActor(t *testing.T) {
 		t.Fatal("expected github-actions bot comments to be allowed when disabled")
 	}
 }
+
+func TestReviewRequestTarget(t *testing.T) {
+	tests := map[string]struct {
+		cfg               config.Config
+		pr                PullRequest
+		wantDirectRequest bool
+		wantRequestedTeam string
+	}{
+		"direct user request wins": {
+			cfg: config.Config{GitHubUsername: "zalimeni", TeamReviewRequestAllowlist: map[string]struct{}{"team-infragraph": {}}},
+			pr: PullRequest{
+				RequestedReviewers: []User{{Login: "zalimeni"}},
+				RequestedTeams:     []Team{{Slug: "team-infragraph"}},
+			},
+			wantDirectRequest: true,
+		},
+		"allowlisted team request": {
+			cfg: config.Config{GitHubUsername: "zalimeni", TeamReviewRequestAllowlist: map[string]struct{}{"team-infragraph": {}}},
+			pr: PullRequest{
+				RequestedTeams: []Team{{Slug: "team-infragraph"}},
+			},
+			wantRequestedTeam: "team-infragraph",
+		},
+		"team request blocked by default": {
+			cfg: config.Config{GitHubUsername: "zalimeni"},
+			pr: PullRequest{
+				RequestedTeams: []Team{{Slug: "team-infragraph"}},
+			},
+		},
+		"different direct reviewer blocked": {
+			cfg: config.Config{GitHubUsername: "zalimeni", TeamReviewRequestAllowlist: map[string]struct{}{"team-other": {}}},
+			pr: PullRequest{
+				RequestedReviewers: []User{{Login: "someone-else"}},
+				RequestedTeams:     []Team{{Slug: "team-infragraph"}},
+			},
+		},
+	}
+
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			gotDirectRequest, gotRequestedTeam := reviewRequestTarget(tt.cfg, tt.pr)
+			if gotDirectRequest != tt.wantDirectRequest {
+				t.Fatalf("direct request mismatch: got %v want %v", gotDirectRequest, tt.wantDirectRequest)
+			}
+			if gotRequestedTeam != tt.wantRequestedTeam {
+				t.Fatalf("requested team mismatch: got %q want %q", gotRequestedTeam, tt.wantRequestedTeam)
+			}
+		})
+	}
+}

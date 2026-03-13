@@ -53,12 +53,20 @@ type Thread struct {
 }
 
 type PullRequest struct {
-	Number            int    `json:"number"`
-	Title             string `json:"title"`
-	HTMLURL           string `json:"html_url"`
-	ReviewCommentsURL string `json:"review_comments_url"`
-	CommentsURL       string `json:"comments_url"`
-	User              User   `json:"user"`
+	Number             int    `json:"number"`
+	Title              string `json:"title"`
+	HTMLURL            string `json:"html_url"`
+	ReviewCommentsURL  string `json:"review_comments_url"`
+	CommentsURL        string `json:"comments_url"`
+	User               User   `json:"user"`
+	RequestedReviewers []User `json:"requested_reviewers"`
+	RequestedTeams     []Team `json:"requested_teams"`
+}
+
+type Team struct {
+	Slug string `json:"slug"`
+	Name string `json:"name"`
+	URL  string `json:"html_url"`
 }
 
 type ReviewComment struct {
@@ -164,6 +172,12 @@ func EnrichThread(ctx context.Context, client *Client, cfg config.Config, thread
 
 	switch thread.Reason {
 	case "review_requested":
+		directlyRequested, requestedTeam := reviewRequestTarget(cfg, pr)
+		if !directlyRequested && requestedTeam == "" {
+			log.Printf("notification action=skip_unallowed_review_request repo=%s pr=%d reason=%s requested_reviewers=%d requested_teams=%d", notification.Repo, notification.PRNumber, notification.Reason, len(pr.RequestedReviewers), len(pr.RequestedTeams))
+			return model.Notification{}, false, nil
+		}
+		notification.RequestedTeam = requestedTeam
 		if !finalizeNotification(&notification) {
 			return model.Notification{}, false, nil
 		}
@@ -447,4 +461,20 @@ func parseUpdatedAt(raw string) time.Time {
 		return time.Time{}
 	}
 	return t
+}
+
+func reviewRequestTarget(cfg config.Config, pr PullRequest) (bool, string) {
+	for _, reviewer := range pr.RequestedReviewers {
+		if strings.EqualFold(strings.TrimSpace(reviewer.Login), cfg.GitHubUsername) {
+			return true, ""
+		}
+	}
+
+	for _, team := range pr.RequestedTeams {
+		if filter.AllowTeamReviewRequest(cfg, team.Slug) {
+			return false, team.Slug
+		}
+	}
+
+	return false, ""
 }

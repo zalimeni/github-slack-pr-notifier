@@ -32,3 +32,12 @@ func IgnoreCommentActor(cfg config.Config, actor string) bool {
 
 	return strings.EqualFold(strings.TrimSpace(actor), "github-actions[bot]")
 }
+
+func AllowTeamReviewRequest(cfg config.Config, slug string) bool {
+	if strings.TrimSpace(slug) == "" {
+		return false
+	}
+
+	_, ok := cfg.TeamReviewRequestAllowlist[strings.ToLower(strings.TrimSpace(slug))]
+	return ok
+}

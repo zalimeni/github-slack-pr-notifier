@@ -24,3 +24,20 @@ func TestIgnoreCommentActor(t *testing.T) {
 		t.Fatal("expected non-bot actor to be allowed")
 	}
 }
+
+func TestAllowTeamReviewRequest(t *testing.T) {
+	cfg := config.Config{TeamReviewRequestAllowlist: map[string]struct{}{"team-infragraph": {}}}
+
+	if !AllowTeamReviewRequest(cfg, "team-infragraph") {
+		t.Fatal("expected allowlisted team review request to be allowed")
+	}
+	if !AllowTeamReviewRequest(cfg, "TEAM-INFRAGRAPH") {
+		t.Fatal("expected team slug matching to be case-insensitive")
+	}
+	if AllowTeamReviewRequest(cfg, "team-other") {
+		t.Fatal("expected unlisted team review request to be blocked")
+	}
+	if AllowTeamReviewRequest(config.Config{}, "team-infragraph") {
+		t.Fatal("expected team review requests to be blocked by default")
+	}
+}

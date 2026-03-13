@@ -38,7 +38,7 @@ The poller currently emits Slack notifications for pull request threads with the
 - `manual`
 - `state_change`
 
-`review_requested` is sent as a direct PR review request. Reasons with a latest issue/review comment URL are enriched into either `PR comment` or `inline comment` messages.
+`review_requested` is sent only when the authenticated user is directly requested or a requested team slug is explicitly allowlisted. Reasons with a latest issue/review comment URL are enriched into either `PR comment` or `inline comment` messages.
 
 ## Required Lambda environment variables
 
@@ -49,6 +49,7 @@ The poller currently emits Slack notifications for pull request threads with the
 Optional:
 
 - `REPO_ALLOWLIST` as comma-separated `org/repo`
+- `TEAM_REVIEW_REQUEST_ALLOWLIST` as comma-separated GitHub team slugs, default empty
 - `POLL_PARTICIPATING` default `true`
 - `POLL_ALL` default `false`
 - `IGNORE_GITHUB_ACTIONS_COMMENTS` default `true`
@@ -76,7 +77,8 @@ terraform apply \
   -var artifact_path=../dist/function.zip \
   -var github_token=ghp_xxx \
   -var slack_workflow_url=https://hooks.slack.com/triggers/... \
-  -var repo_allowlist=org/repo-a,org/repo-b
+  -var repo_allowlist=org/repo-a,org/repo-b \
+  -var team_review_request_allowlist=team-infragraph
 ```
 
 Useful Terraform inputs:
@@ -84,6 +86,7 @@ Useful Terraform inputs:
 - `aws_region` default `us-east-1`
 - `github_username` default `zalimeni`
 - `state_table_name` default `github-slack-pr-notifier-state`
+- `team_review_request_allowlist` default empty
 - `secrets_manager_id` default `github-slack-pr-notifier/runtime`
 - `dedup_ttl` default `168h`
 - `debounce_window` default `2m`
@@ -125,5 +128,6 @@ Create a workflow with:
 - only notifications updated within the live-feed window are eligible to send
 - empty fallback `activity on your PR` notifications are suppressed unless GitHub gives enough comment context to enrich them
 - `github-actions[bot]` PR and inline comment notifications are ignored by default
+- team-originated review requests are ignored by default unless the team slug is allowlisted
 - no mark-as-read behavior yet; this tool observes your inbox rather than mutating it
 - no Slack threading because delivery uses a workflow webhook rather than a Slack app token
