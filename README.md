@@ -2,6 +2,8 @@
 
 Scheduled GitHub notifications poller that sends pull-request-related inbox activity into a Slack workflow webhook.
 
+That is: A cheap replacement for GH PR notifications if your company won't enable enable the real thing. Only requires the ability to create a Slack channel workflow.
+
 ## What it does
 
 - runs on an EventBridge schedule with a single Lambda function
